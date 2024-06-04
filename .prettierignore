@@ -1,0 +1,18 @@
+node_modules/
+
+/build
+/dist
+/coverage
+/.expo
+/.next
+/.vscode
+package-lock.json
+
+# Ignore Android build files
+/android/app/build
+
+# Ignore iOS build files
+/ios/build
+
+# Ignore hidden files
+.*

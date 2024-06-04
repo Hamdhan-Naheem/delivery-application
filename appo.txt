@@ -1,0 +1,107 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-nested-ternary */
+import { Box, Typography } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
+import Grid from '@mui/material/Unstable_Grid2';
+import { API } from 'aws-amplify';
+import React, { useState } from 'react';
+import { FormContainer } from 'react-hook-form-mui';
+
+import { useUserId } from '../../src/components/cognitoIdContext';
+import FormButton from '../../src/components/form/FormButton';
+import FormTextField from '../../src/components/form/FormTextField';
+import TreatmentsDropdown from '../../src/components/TreatmentsDropdown';
+
+function CreateWorker() {
+  const [name, setName] = useState('');
+  const [phone_number, setPhoneNumber] = useState('');
+  const [displayError, setDisplayError] = useState(false);
+  const [validationError, setValidationError] = useState('');
+  const [validationSuccess, setValidationSuccess] = useState('');
+  const [treatmentId, setTreatmentId] = useState<number[]>([]);
+  const { userId } = useUserId();
+  const [loading, setLoading] = useState(false);
+
+  const selectedTreatmentId = (id: number[]) => {
+    setTreatmentId(id);
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      await API.post('user-profile', '/worker', {
+        body: {
+          name,
+          phone_number,
+          salon_id: userId,
+          treatment_id: treatmentId,
+        },
+      });
+      setValidationSuccess('Worker created successfully');
+      setDisplayError(false);
+    } catch (error) {
+      setValidationError('Worker not created successfully');
+      setDisplayError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Grid container flexDirection="column" alignItems="center" className="mt-16">
+      <Typography component="h1" variant="h5">
+        Create Worker
+      </Typography>
+      <Grid xs={10} sm={5} md={5} lg={4} className="mt-6">
+        <FormContainer mode="all" onSuccess={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid xs={12}>
+              <FormTextField
+                id="workerName"
+                label="Worker Name"
+                name="workerName"
+                type="workerName"
+                autoComplete="workerName"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Grid>
+
+            <Grid xs={12}>
+              <FormTextField
+                id="phoneNumber"
+                label="Phone Number"
+                name="phoneNumber"
+                type="phoneNumber"
+                autoComplete="phoneNumber"
+                value={phone_number}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </Grid>
+
+            <Grid xs={12}>
+              <TreatmentsDropdown
+                onSelectedTreatmentIdsChange={selectedTreatmentId}
+              />
+            </Grid>
+          </Grid>
+          <Box sx={{ width: '100%', mt: 2 }}>
+            {loading ? (
+              <LinearProgress />
+            ) : displayError ? (
+              <Box className="text-sm text-red-500">{validationError}</Box>
+            ) : (
+              <Box className="text-sm text-green-500">{validationSuccess}</Box>
+            )}
+          </Box>
+          <FormButton
+            className="mt-6 mb-4 bg-sky-600 w-full"
+            Text="Create Worker"
+          />
+        </FormContainer>
+      </Grid>
+    </Grid>
+  );
+}
+
+export default CreateWorker;

@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Acai",
+    "count": 7
+  },
+  {
+    "name": "America",
+    "count": 9
+  },
+  {
+    "name": "Sri Lankan",
+    "count": 15
+  },
+  {
+    "name": "Alcohol",
+    "count": 330
+  },
+  {
+    "name": "BBQ",
+    "count": 120
+  },
+  {
+    "name": "Desert",
+    "count": 282
+  },
+  {
+    "name": "Brunch",
+    "count": 118
+  },
+  {
+    "name": "Cakes",
+    "count": 30
+  },
+  {
+    "name": "falafel",
+    "count": 30
+  },
+  {
+    "name": "German",
+    "count": 5
+  },
+  {
+    "name": "Indians",
+    "count": 112
+  },
+  {
+    "name": "Healthy",
+    "count": 122
+  },
+  {
+    "name": "Meal Deal",
+    "count": 120
+  },
+  {
+    "name": "pancakes",
+    "count": 15
+  },
+  {
+    "name": "Pizza",
+    "count": 208
+  },
+  {
+    "name": "Soup",
+    "count": 8
+  },
+  {
+    "name": "Takeaways",
+    "count": 87
+  },
+  {
+    "name": "Wraps",
+    "count": 99
+  }
+]
